@@ -1,7 +1,6 @@
 import sys
 import random
 import pygame as pg
-## Szerokość 10 wysokość 20
 running = True
 black = (0,0,0)
 dark_grey = (48,48,48)
