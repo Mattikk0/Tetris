@@ -1,7 +1,4 @@
 
-import time
-import Drawing_Actions
-import Keyboard_Actions
 game_board = [[0 for i in range(15)] for j in range(21)]
 
 def clear_board():
@@ -42,10 +39,6 @@ def movement(figure, new_figure):
         figure.y_top += 1
         figure.y_bot += 1
         put_structure_on_board(figure, (figure.x_left, figure.x_right, figure.y_top, figure.y_bot))
-        print("-----------------------------------------------\n")
-        for row in game_board:
-            print(str(row) + "\n")
-
 
     if check_if_stopped(figure):
         x_left = figure.x_left
@@ -56,11 +49,9 @@ def movement(figure, new_figure):
                     board_x = x_left + fx
                     board_y = y_top + fy
                     if 0 <= board_x < len(game_board[0]) and 0 <= board_y < len(game_board):
-                        game_board[board_y][board_x] = 2
+                        game_board[board_y][board_x] = figure.number + 2
         Main_Game.stopped = True
-    print("-----------------------------------------------\n")
-    for row in game_board:
-        print(str(row) + "\n")
+
 
 def check_if_stopped(figure):
     for fig_x in range(figure.width):
@@ -70,6 +61,6 @@ def check_if_stopped(figure):
         for fy in range(figure.height - 1, -1, -1):
             if fig_x < len(figure.structure[fy]) and figure.structure[fy][fig_x] == 1:
                 below_y = figure.y_top + fy + 1
-                if below_y >= len(game_board) or game_board[below_y][board_x] == 2:
+                if below_y >= 20 or (game_board[below_y][board_x] != 0 and game_board[below_y][board_x] != 1):
                     return True
     return False

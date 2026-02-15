@@ -16,9 +16,13 @@ last_drop_time = pg.time.get_ticks()
 delay = 1000
 
 figure = Figure_Actions.Figure(Figure_Actions.choose_figure())
+next_figure = Figure_Actions.Figure(Figure_Actions.choose_figure())
 Gameplay_Actions.movement(figure, True)
 Drawing_Actions.draw_screen()
+Drawing_Actions.draw_figure(figure)
+Drawing_Actions.draw_next_figure(next_figure)
 pg.display.flip()
+
 ############################################# Pętla gry
 while running:
     clock.tick(60)
@@ -32,9 +36,12 @@ while running:
         Gameplay_Actions.movement(figure, False)
         last_drop_time = now
         if stopped:
-            figure = Figure_Actions.Figure(Figure_Actions.choose_figure())
+            figure = next_figure
+            next_figure = Figure_Actions.Figure(Figure_Actions.choose_figure())
             Gameplay_Actions.movement(figure, True)
             stopped = False
     Drawing_Actions.draw_screen()
+    Drawing_Actions.draw_figure(figure)
+    Drawing_Actions.draw_next_figure(next_figure)
     pg.display.flip()
 

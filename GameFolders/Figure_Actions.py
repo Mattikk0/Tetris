@@ -1,4 +1,7 @@
 import random
+
+from GameFolders import Drawing_Actions
+
 black = (0,0,0)
 dark_grey = (48,48,48)
 very_dark_grey = (16,16,16)
@@ -65,6 +68,7 @@ def rotate_figure(figure):
         figure.y_bot = 20
         figure.y_top = figure.y_bot - figure.height + 1
     Gameplay_Actions.put_structure_on_board(figure, (figure.x_left, figure.x_right, figure.y_top, figure.y_bot))
+    Drawing_Actions.draw_figure(figure)
 
 
 ############################################## Wybór figury
