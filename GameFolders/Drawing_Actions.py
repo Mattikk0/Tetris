@@ -25,7 +25,6 @@ pg.display.set_caption('Tetris')
 zone1 = pg.Rect(0, 0, two_thirds_width, screen_height)
 zone2 = pg.Rect(two_thirds_width, 0, one_third_width, one_third_height)
 zone3 = pg.Rect(two_thirds_width, one_third_height, one_third_width, two_thirds_height)
-############################################## Rysowanie ekranu gry
 def draw_screen():
 
     pg.draw.rect(screen, black, zone1)

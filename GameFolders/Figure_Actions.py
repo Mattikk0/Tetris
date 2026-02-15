@@ -27,7 +27,6 @@ figures = [[[1,1,1,1]], #I - 0
             [1,1]]]
 colors = [blue, pink, orange, brown, red, green, yellow]
 
-############################################## Klasa Figury
 class Figure:
     def __init__(self, number):
         self.number = number
@@ -40,7 +39,6 @@ class Figure:
         self.height = len(self.structure)
         self.width = max((len(row) for row in self.structure), default=0)
 
-############################################## Obracanie figury
 def rotate_figure(figure):
     import Gameplay_Actions
     rotated_structure = []
@@ -71,7 +69,6 @@ def rotate_figure(figure):
     Drawing_Actions.draw_figure(figure)
 
 
-############################################## Wybór figury
 def choose_figure():
     index = random.randint(0, len(figures)-1)
     return index

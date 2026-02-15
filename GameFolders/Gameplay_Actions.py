@@ -52,7 +52,7 @@ def movement(figure, new_figure):
                         game_board[board_y][board_x] = figure.number + 2
         Main_Game.stopped = True
 
-
+#sprawdzenie
 def check_if_stopped(figure):
     for fig_x in range(figure.width):
         board_x = figure.x_left + fig_x

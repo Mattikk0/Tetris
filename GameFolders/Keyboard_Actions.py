@@ -20,5 +20,5 @@ def movement(figure, pg, event):
                 for i in range(figure.width):
                     if game_board[figure.y_bot][i] + 1 != 0 and game_board[figure.y_bot][i] + 1 != 1 and game_board[figure.y_bot][i] != 0 and game_board[figure.y_bot][i] != 1:
                         return
-                #Gameplay_Actions.movement(figure, False)
+                # to zrobić
 
