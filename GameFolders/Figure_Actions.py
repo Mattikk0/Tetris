@@ -37,11 +37,13 @@ class Figure:
         self.y_top = 0
         self.left_bot = 0
         self.height = len(self.structure)
-        self.width = max((len(row) for row in self.structure), default=0)
+        self.width = max(len(row) for row in self.structure)
 
 def rotate_figure(figure):
     import Gameplay_Actions
     rotated_structure = []
+    old_height = figure.height
+    old_width = figure.width
     if figure.number == 0:
         for x in range(figure.width):
             new_row = []
@@ -58,16 +60,24 @@ def rotate_figure(figure):
     figure.height = figure.width
     figure.width = temp
     figure.structure = rotated_structure
-    figure.x_left = max(figure.x_left, 0)
+    figure.x_left += (old_width // 2) - (figure.width // 2)
+    figure.y_top += (old_height // 2) - (figure.height // 2)
     figure.x_right = figure.x_left + figure.width - 1
-    figure.y_top = max(figure.y_top, 0)
     figure.y_bot = figure.y_top + figure.height - 1
-    if figure.y_bot > 20:
-        figure.y_bot = 20
+    if figure.y_bot > 19:
+        figure.y_bot = 19
         figure.y_top = figure.y_bot - figure.height + 1
     Gameplay_Actions.put_structure_on_board(figure, (figure.x_left, figure.x_right, figure.y_top, figure.y_bot))
     Drawing_Actions.draw_figure(figure)
 
+def undo_rotate_figure(figure, structure):
+    figure.structure = structure
+    figure.x_left = max(figure.x_left, 0)
+    figure.x_right = figure.x_left + figure.width - 1
+    figure.y_top = max(figure.y_top, 0)
+    figure.y_bot = figure.y_top + figure.height - 1
+    figure.height = len(figure.structure)
+    figure.width = max(len(row) for row in figure.structure)
 
 def choose_figure():
     index = random.randint(0, len(figures)-1)

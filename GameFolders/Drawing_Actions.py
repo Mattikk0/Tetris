@@ -1,5 +1,6 @@
 import pygame as pg
 import Gameplay_Actions
+from GameFolders.Gameplay_Actions import game_board
 
 black = (0,0,0)
 dark_grey = (48,48,48)
@@ -67,7 +68,7 @@ def draw_figure(figure):
     cell_height = (zone1.height // 20)
     for y in range(figure.height):
         for x in range(figure.width):
-            if figure.structure[y][x] == 1:
+            if figure.x_left + x < len(game_board[0]) and figure.structure[y][x] == 1 and not game_board[figure.y_top + y][figure.x_left + x] > 1:
                 x_pos = zone1.left + (figure.x_left + x) * cell_width
                 y_pos = zone1.top - cell_height + (figure.y_top + y) * cell_height
                 if 0 <= x_pos < zone1.right and 0 <= y_pos < zone1.bottom:

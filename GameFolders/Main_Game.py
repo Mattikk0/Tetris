@@ -23,6 +23,7 @@ Drawing_Actions.draw_figure(figure)
 Drawing_Actions.draw_next_figure(next_figure)
 pg.display.flip()
 
+
 while running:
     clock.tick(60)
     for event in pg.event.get():
