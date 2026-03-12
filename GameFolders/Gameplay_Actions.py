@@ -1,4 +1,5 @@
-
+from PIL.EpsImagePlugin import has_ghostscript
+full_rows = []
 game_board = [[0 for i in range(15)] for j in range(21)]
 def clear_board():
     for x in range(15):
@@ -60,7 +61,39 @@ def movement(figure, new_figure):
                         if 0 <= board_x < len(game_board[0]) and 0 <= board_y < len(game_board):
                             game_board[board_y][board_x] = figure.number + 2
             Main_Game.stopped = True
+            full_rows.clear()
+            remove_full_lines()
+            lower_lines()
             return
+
+def check_full_lines(line_number):
+    for x in range(len(game_board[0])):
+        if game_board[line_number][x] == 0:
+            return -1
+    full_rows.append(line_number)
+    return line_number
+
+def remove_full_lines():
+    for y in range(len(game_board)):
+        temp = check_full_lines(y)
+        if temp != -1:
+            for x in range(len(game_board[temp])):
+                game_board[temp][x] = 0
+def check_highest_row():
+    for y in range(len(game_board)):
+        for x in range(len(game_board[0])):
+            if game_board[y][x] > 1:
+                return y
+    return -1
+
+def lower_lines():
+    highest_row = check_highest_row()
+    for row in full_rows:
+        if row > highest_row:
+            for y in range(row, -1, -1):
+                for x in range(len(game_board[0])):
+                    if not y-1 < 0:
+                        game_board[y][x] = game_board[y-1][x]
 
 
 
