@@ -1,8 +1,8 @@
 
-game_board = [[0 for i in range(15)] for j in range(20)]
+game_board = [[0 for i in range(15)] for j in range(21)]
 def clear_board():
     for x in range(15):
-        for y in range(20):
+        for y in range(len(game_board)):
             if game_board[y][x] == 1:
                 game_board[y][x] = 0
 
@@ -42,7 +42,7 @@ def movement(figure, new_figure):
                 if fig_x < len(figure.structure[fy]) and figure.structure[fy][fig_x] == 1:
                     board_x = figure.x_left + fig_x
                     below_y = figure.y_top + fy + 1
-                    if below_y >= 20 or (game_board[below_y][board_x] != 0 and game_board[below_y][board_x] != 1):
+                    if below_y >= len(game_board) or (game_board[below_y][board_x] != 0 and game_board[below_y][board_x] != 1):
                         can_move_down = False
                     break
         if can_move_down:

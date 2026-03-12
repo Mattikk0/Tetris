@@ -13,7 +13,7 @@ Drawing_Actions.draw_screen()
 pg.display.flip()
 
 last_drop_time = pg.time.get_ticks()
-delay = 1000
+delay = 300
 
 figure = Figure_Actions.Figure(Figure_Actions.choose_figure())
 next_figure = Figure_Actions.Figure(Figure_Actions.choose_figure())

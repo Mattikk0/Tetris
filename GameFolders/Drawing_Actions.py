@@ -53,13 +53,13 @@ def draw_screen():
         pg.draw.line(screen, very_dark_grey,
                      (i * (screen_height // 20), zone1.top + (line_width / 2)),
                      (i * (screen_height // 20), zone1.bottom - (line_width / 2)), 2)
-    for i in range(Gameplay_Actions.game_board.__len__()):
+    for i in range(1, Gameplay_Actions.game_board.__len__()):
         for j in range(Gameplay_Actions.game_board[i].__len__()):
             cell_value = Gameplay_Actions.game_board[i][j]
             if cell_value != 0 and cell_value != 1:
                 color = colors[cell_value - 2]
                 pg.draw.rect(screen, color, (zone1.left + j * (zone1.width // 15),
-                                            zone1.top + i * (zone1.height // 20),
+                                            zone1.top + (i - 1) * (zone1.height // 20),
                                             zone1.width // 15,
                                             zone1.height // 20))
 
@@ -70,7 +70,8 @@ def draw_figure(figure):
         for x in range(figure.width):
             if figure.x_left + x < len(game_board[0]) and figure.structure[y][x] == 1 and not game_board[figure.y_top + y][figure.x_left + x] > 1:
                 x_pos = zone1.left + (figure.x_left + x) * cell_width
-                y_pos = zone1.top - cell_height + (figure.y_top + y) * cell_height
+                #y_pos = zone1.top - cell_height + (figure.y_top + y) * cell_height
+                y_pos = zone1.top + (figure.y_top + y - 1) * cell_height
                 if 0 <= x_pos < zone1.right and 0 <= y_pos < zone1.bottom:
                     pg.draw.rect(screen, figure.color, (x_pos, y_pos, cell_width, cell_height))
 
