@@ -68,7 +68,6 @@ def rotate_figure(figure):
         figure.y_bot = 19
         figure.y_top = figure.y_bot - figure.height + 1
     Gameplay_Actions.put_structure_on_board(figure, (figure.x_left, figure.x_right, figure.y_top, figure.y_bot))
-    Drawing_Actions.draw_figure(figure)
 
 def undo_rotate_figure(figure, structure):
     figure.structure = structure

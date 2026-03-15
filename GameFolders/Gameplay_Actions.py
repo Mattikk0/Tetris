@@ -1,6 +1,9 @@
 from PIL.EpsImagePlugin import has_ghostscript
+import sys
+import pygame as pg
 full_rows = []
 game_board = [[0 for i in range(15)] for j in range(21)]
+game_over_flag = False
 def clear_board():
     for x in range(15):
         for y in range(len(game_board)):
@@ -29,7 +32,7 @@ def put_structure_on_board(figure, position):
                         game_board[y][x] = 1
 
 def movement(figure, new_figure):
-    import Main_Game
+    import __main__ as Main_Game
     if new_figure:
         figure.x_left = 6
         figure.x_right = figure.width + figure.x_left - 1
@@ -94,6 +97,27 @@ def lower_lines():
                 for x in range(len(game_board[0])):
                     if not y-1 < 0:
                         game_board[y][x] = game_board[y-1][x]
+
+def game_over():
+    if check_highest_row() == 0:
+        return True
+    return False
+
+def after_game_over():
+    import Main_Game
+    import Drawing_Actions
+    import Figure_Actions
+    keys = pg.key.get_pressed()
+    if keys[pg.K_ESCAPE]:
+        pg.quit()
+        sys.exit()
+    if keys[pg.K_SPACE]:
+        print("CHUJ")
+
+def reset_board():
+    for y in range(len(game_board)):
+        for x in range(len(game_board[0])):
+            game_board[y][x] = 0
 
 
 

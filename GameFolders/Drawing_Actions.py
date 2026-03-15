@@ -5,6 +5,7 @@ from GameFolders.Gameplay_Actions import game_board
 black = (0,0,0)
 dark_grey = (48,48,48)
 very_dark_grey = (16,16,16)
+white = (255,255,255)
 blue = (0,0,255)
 red = (255,0,0)
 green = (0,255,0)
@@ -13,21 +14,27 @@ yellow = (255,255,0)
 orange = (255,165,0)
 brown = (139,69,19)
 colors = [blue, pink, orange, brown, red, green, yellow]
-pg.init()
-info = pg.display.Info()
+#pg.init()
 screen_width = 1350
 screen_height = 1200
 two_thirds_width = (2 * screen_width) // 3
 two_thirds_height = (2 * screen_height) // 3
 one_third_height = screen_height // 3
 one_third_width = screen_width // 3
-screen = pg.display.set_mode((screen_width, screen_height))
-pg.display.set_caption('Tetris')
+#screen = pg.display.set_mode((screen_width, screen_height))
+#pg.display.set_caption('Tetris')
 zone1 = pg.Rect(0, 0, two_thirds_width, screen_height)
 zone2 = pg.Rect(two_thirds_width, 0, one_third_width, one_third_height)
 zone3 = pg.Rect(two_thirds_width, one_third_height, one_third_width, two_thirds_height)
-def draw_screen():
+screen = None
 
+def init_pygame():
+    global screen
+    pg.init()
+    info = pg.display.Info()
+    screen = pg.display.set_mode((screen_width, screen_height))
+    pg.display.set_caption("Tetris")
+def draw_screen():
     pg.draw.rect(screen, black, zone1)
     pg.draw.rect(screen, black, zone2)
     pg.draw.rect(screen, black, zone3)
@@ -86,3 +93,21 @@ def draw_next_figure(figure):
                 y_pos = zone2.top + (y + 2) * cell_height
                 pg.draw.rect(screen, figure.color, (x_pos, y_pos, cell_width, cell_height))
 
+def game_over_screen(c):
+    screen.fill(black)
+    font_big = pg.font.Font(None, 100)
+    font_med = pg.font.Font(None, 80)
+    font_small = pg.font.Font(None, 50)
+    text = font_big.render("GAME OVER!", True, white)
+    score = font_med.render(f"Score: {c}", True, white)
+    exit_game = font_small.render("(Press escape to exit)", True, white)
+    restart_game = font_small.render("(Press space to restart)", True, white)
+    text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
+    text_scr = score.get_rect(center=(screen_width // 2, (screen_height // 2) + 50))
+    text_exit = exit_game.get_rect(center=(screen_width // 2, (screen_height // 2) + 150))
+    text_restart = restart_game.get_rect(center=(screen_width // 2, (screen_height // 2) + 250))
+    screen.blit(text, text_rect)
+    screen.blit(score, text_scr)
+    screen.blit(exit_game, text_exit)
+    screen.blit(restart_game, text_restart)
+    pg.display.flip()
