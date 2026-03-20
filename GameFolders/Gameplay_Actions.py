@@ -2,8 +2,9 @@ from PIL.EpsImagePlugin import has_ghostscript
 import sys
 import pygame as pg
 full_rows = []
+number_of_full_rows = 0
+lines_deleted = 0
 game_board = [[0 for i in range(15)] for j in range(21)]
-game_over_flag = False
 def clear_board():
     for x in range(15):
         for y in range(len(game_board)):
@@ -77,11 +78,14 @@ def check_full_lines(line_number):
     return line_number
 
 def remove_full_lines():
+    global number_of_full_rows
     for y in range(len(game_board)):
         temp = check_full_lines(y)
         if temp != -1:
             for x in range(len(game_board[temp])):
                 game_board[temp][x] = 0
+    number_of_full_rows = len(full_rows)
+    return number_of_full_rows
 def check_highest_row():
     for y in range(len(game_board)):
         for x in range(len(game_board[0])):
@@ -100,26 +104,49 @@ def lower_lines():
 
 def game_over():
     if check_highest_row() == 0:
+        global lines_deleted
+        lines_deleted = 0
         return True
     return False
 
 def after_game_over():
-    import Main_Game
-    import Drawing_Actions
-    import Figure_Actions
     keys = pg.key.get_pressed()
     if keys[pg.K_ESCAPE]:
         pg.quit()
         sys.exit()
     if keys[pg.K_SPACE]:
-        print("CHUJ")
+        pg.event.post(pg.event.Event(pg.USEREVENT, {"action": "RESTART"}))
 
 def reset_board():
     for y in range(len(game_board)):
         for x in range(len(game_board[0])):
             game_board[y][x] = 0
 
+def count_the_score(delay):
+    global number_of_full_rows
+    global lines_deleted
+    temp = 0 #mnożnik wyniku
+    match number_of_full_rows:
+        case 0:
+            return 0
+        case 1:
+            temp = 100
+        case 2:
+            temp = 200
+        case 3:
+            temp = 500
+        case 4:
+            temp = 1000
+    lines_deleted += number_of_full_rows
+    number_of_full_rows = 0
+    return (100/delay)*temp
 
+def decreasing_delay(delay):
+    global lines_deleted
+    if lines_deleted >= 2:
+        lines_deleted = 0
+        return 0.8 * delay
+    return delay
 
 
 

@@ -77,7 +77,6 @@ def draw_figure(figure):
         for x in range(figure.width):
             if figure.x_left + x < len(game_board[0]) and figure.structure[y][x] == 1 and not game_board[figure.y_top + y][figure.x_left + x] > 1:
                 x_pos = zone1.left + (figure.x_left + x) * cell_width
-                #y_pos = zone1.top - cell_height + (figure.y_top + y) * cell_height
                 y_pos = zone1.top + (figure.y_top + y - 1) * cell_height
                 if 0 <= x_pos < zone1.right and 0 <= y_pos < zone1.bottom:
                     pg.draw.rect(screen, figure.color, (x_pos, y_pos, cell_width, cell_height))
@@ -111,3 +110,11 @@ def game_over_screen(c):
     screen.blit(exit_game, text_exit)
     screen.blit(restart_game, text_restart)
     pg.display.flip()
+
+def draw_score(score):
+    font = pg.font.Font(None, 70)
+    text = font.render(f"Score: {int(score)}", True, white)
+    text_rect = text.get_rect(center=((zone3.right + zone3.left) // 2, (zone3.top + zone3.bottom) // 2))
+    screen.blit(text, text_rect)
+    pg.display.flip()
+

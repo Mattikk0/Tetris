@@ -2,22 +2,33 @@ import tkinter as tk
 import pygame as pg
 import Main_Game
 
-root = tk.Tk()
 set_delay = 500
+automatic = False
+if not hasattr(tk, '_default_root'):
+    root = tk.Tk()
+    root.withdraw()
+
+
+def on_close():
+    exit(0)
 def validate_input(new_value):
     return new_value.isdigit() and len(new_value) <= 4 or new_value == ""
 
-def start_game(delay_val):
+def start_game(delay_val, delay_check_val):
     global root
     global set_delay
+    global automatic
     if delay_val != '':
         set_delay = int(delay_val)
     else:
         set_delay = 500
-    root.quit()
+    if delay_check_val:
+        automatic = True
     root.destroy()
+    root.quit()
 def launch_menu():
     global root
+    root = tk.Tk()
     delay_check_var = tk.BooleanVar(value=False)
     delay = tk.Frame(root)
     delay.pack(pady=5, fill="x")
@@ -38,7 +49,9 @@ def launch_menu():
     delay_checkbox = tk.Checkbutton(delay, text="Automatically ascending", variable=delay_check_var, font=("Arial", 10))
     delay_checkbox.pack(side='left', expand=True, pady=10)
 
-    start_game_button = tk.Button(root, text="Start",width=20, height=2, command=lambda: start_game(entry.get()))
+    start_game_button = tk.Button(root, text="Start",width=20, height=2, command=lambda: start_game(entry.get(), delay_check_var.get()))
     start_game_button.pack(side='left', expand=True, padx=1)
+    root.bind("<Return>", lambda event: start_game(entry.get(), delay_check_var.get()))
 
+    root.protocol("WM_DELETE_WINDOW", on_close)
     root.mainloop()
