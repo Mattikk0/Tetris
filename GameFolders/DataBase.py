@@ -17,7 +17,7 @@ def add_game(points):
     cursor = conn.cursor()
     curr_date = str(date.today().strftime("%d-%m-%Y"))
     cursor.execute(f"""
-    INSERT INTO scores (points, game_date) VALUES ({points}, '{str(curr_date)}') """)
+    INSERT INTO scores (points, game_date) VALUES ({int(points)}, '{str(curr_date)}') """)
     conn.commit()
 
 def display_scores():

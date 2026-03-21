@@ -143,7 +143,7 @@ def count_the_score(delay):
 
 def decreasing_delay(delay):
     global lines_deleted
-    if lines_deleted >= 2:
+    if lines_deleted >= 10:
         lines_deleted = 0
         return 0.8 * delay
     return delay
