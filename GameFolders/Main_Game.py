@@ -6,12 +6,14 @@ import Gameplay_Actions
 import Keyboard_Actions
 from GameFolders import Menu_Actions
 from GameFolders.Gameplay_Actions import after_game_over
+import DataBase
 
 stopped = False
-
+added_game = False
+DataBase.connect_and_setup()
 def main():
     global stopped
-
+    global added_game
     score = 0
     Menu_Actions.launch_menu()
     auto_delay = Menu_Actions.automatic
@@ -37,7 +39,6 @@ def main():
     Drawing_Actions.draw_next_figure(next_figure)
     Drawing_Actions.draw_score(score)
     pg.display.flip()
-
     while running:
         clock.tick(60)
         for event in pg.event.get():
@@ -50,6 +51,7 @@ def main():
                     pg.quit()
                 Gameplay_Actions.reset_board()
                 score = 0
+                added_game = False
                 Menu_Actions.launch_menu()
                 auto_delay = Menu_Actions.automatic
                 delay = Menu_Actions.set_delay
@@ -90,6 +92,9 @@ def main():
             pg.display.flip()
         else:
             Drawing_Actions.game_over_screen(score)
+            if not added_game:
+                added_game = True
+                DataBase.add_game(score)
             pg.display.flip()
             after_game_over()
 

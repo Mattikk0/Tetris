@@ -31,7 +31,6 @@ screen = None
 def init_pygame():
     global screen
     pg.init()
-    info = pg.display.Info()
     screen = pg.display.set_mode((screen_width, screen_height))
     pg.display.set_caption("Tetris")
 def draw_screen():
@@ -98,7 +97,7 @@ def game_over_screen(c):
     font_med = pg.font.Font(None, 80)
     font_small = pg.font.Font(None, 50)
     text = font_big.render("GAME OVER!", True, white)
-    score = font_med.render(f"Score: {c}", True, white)
+    score = font_med.render(f"Score: {int(c)}", True, white)
     exit_game = font_small.render("(Press escape to exit)", True, white)
     restart_game = font_small.render("(Press space to restart)", True, white)
     text_rect = text.get_rect(center=(screen_width // 2, screen_height // 2))
@@ -118,3 +117,27 @@ def draw_score(score):
     screen.blit(text, text_rect)
     pg.display.flip()
 
+
+def high_scores_screen():
+    import DataBase
+    data = DataBase.display_scores()
+    screen.fill(black)
+    font_big = pg.font.Font(None, 100)
+    font_med = pg.font.Font(None, 50)
+    font_small = pg.font.Font(None, 50)
+
+    top_text = font_big.render("High Scores:", True, white)
+    screen.blit(top_text, (screen_width // 2 - top_text.get_width() // 2, 50))
+
+    if data:
+        for i, record in enumerate(data):
+            text = font_med.render(f"{i + 1}:  {record[1]} points,   {record[2]}", True, white)
+            screen.blit(text, (screen_width // 2 - text.get_width() // 2, 150 + i * 50))
+    else:
+        text = font_med.render("No scores yet!", True, white)
+        screen.blit(text, (screen_width // 2 - text.get_width() // 2, 200))
+
+    exit_text = font_small.render("Press ESC to return", True, white)
+    screen.blit(exit_text, (screen_width // 2 - exit_text.get_width() // 2, screen_height - 100))
+
+    pg.display.flip()

@@ -26,6 +26,40 @@ def start_game(delay_val, delay_check_val):
         automatic = True
     root.destroy()
     root.quit()
+
+
+def high_scores_button():
+    global root
+    import Gameplay_Actions
+    import Drawing_Actions
+
+    root.destroy()
+    root.quit()
+
+    if not pg.get_init():
+        Drawing_Actions.init_pygame()
+
+    Drawing_Actions.high_scores_screen()
+    running = True
+
+    while running:
+        action = Gameplay_Actions.on_high_score_screen()
+        if action == "EXIT":
+            running = False
+
+    pg.quit()
+    launch_menu()
+
+
+def on_high_score_screen():
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            return "EXIT"
+        if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+            return "EXIT"
+    return None
+
+
 def launch_menu():
     global root
     root = tk.Tk()
@@ -52,6 +86,10 @@ def launch_menu():
     start_game_button = tk.Button(root, text="Start",width=20, height=2, command=lambda: start_game(entry.get(), delay_check_var.get()))
     start_game_button.pack(side='left', expand=True, padx=1)
     root.bind("<Return>", lambda event: start_game(entry.get(), delay_check_var.get()))
+
+    leaderboard_button = tk.Button(root, text="📊", width=5, height=2,
+                                    command=lambda: high_scores_button())
+    leaderboard_button.pack(side='bottom', anchor='se', padx=10, pady=10)
 
     root.protocol("WM_DELETE_WINDOW", on_close)
     root.mainloop()

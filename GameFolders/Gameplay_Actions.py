@@ -148,5 +148,13 @@ def decreasing_delay(delay):
         return 0.8 * delay
     return delay
 
+def on_high_score_screen():
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
+            exit(0)
+        if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+            return "EXIT"
+    return None
+
 
 
