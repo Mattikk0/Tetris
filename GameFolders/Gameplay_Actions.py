@@ -1,4 +1,3 @@
-from PIL.EpsImagePlugin import has_ghostscript
 import sys
 import pygame as pg
 full_rows = []
