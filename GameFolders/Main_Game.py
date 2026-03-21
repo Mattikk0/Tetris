@@ -19,7 +19,7 @@ def main():
     auto_delay = Menu_Actions.automatic
     delay = Menu_Actions.set_delay
     Drawing_Actions.init_pygame()
-    Gameplay_Actions.reset_board()
+    Gameplay_Actions.reset_board()##
     running = True
 
     clock = pg.time.Clock()
